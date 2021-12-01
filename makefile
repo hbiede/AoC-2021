@@ -1,20 +1,20 @@
+## Alias for setupDay (used to call `make DAY=X`)
+default: setupDay
+
 ## Call to run your code
 run: 
-	@echo "You must set this up, pal..."
+	cargo run
 
 # Removes leading zero from given day
 SHORT_DAY := $(shell echo ${DAY} | awk 'sub(/^0*/, "", $$1)')
 COOKIE_FILE := cookies.txt
 SESSION ?= ${shell cat ${COOKIE_FILE}}
-YEAR ?= 2020
+YEAR ?= ${shell date +"%Y"}
 
 # Formatting
 H=$(shell tput -Txterm setaf 3; tput bold)
 B=$(shell tput bold; tput smul)
 X=$(shell tput sgr0)
-
-## Alias for setupDay (used to call `make DAY=X`)
-default: setupDay
 
 ## Downloads necessary files and clones the template file (e.g. make DAY=02)
 setupDay: solutionFiles download
@@ -24,8 +24,8 @@ solutionFiles:
 	@echo "${H}=== Copying template for day ${SHORT_DAY} ===${X}"
 	@mkdir -p src/day${DAY}
 	@cp -r src/template/ src/day${DAY}/
-	@sed -i '' -e "s/!DAY!/${DAY}/g" -e "s/MAIN/main/" src/day${DAY}/*.*
-	@sed -i '' -e "s/!DAY!/${DAY}/g" -e "s/MAIN/main/" src/day${DAY}/**/*.*
+	@-sed -i '' -e "s/!DAY!/${DAY}/g" -e "s/MAIN/main/" src/day${DAY}/*.*
+	@-sed -i '' -e "s/!DAY!/${DAY}/g" -e "s/MAIN/main/" src/day${DAY}/**/*.*
 
 ## Downloads the instructions and inputs for a day
 download: src/day${DAY}/README.md src/day${DAY}/input.txt

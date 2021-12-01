@@ -1,5 +1,5 @@
-# AoC-Template
-[Advent of Code](adventofcode.com) Solutions for (YEAR) in (LANGUAGE).
+# AoC-2021
+[Advent of Code](https://adventofcode.com) Solutions for 2021 in Rust.
 
 ## Highlights:
 

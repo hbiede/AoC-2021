@@ -1,0 +1,1 @@
+#[path = "day01/solution.rs"] pub mod day01;
