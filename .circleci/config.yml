@@ -1,7 +1,7 @@
 version: '2.1'
 
 jobs:
-  build:
+  test:
     steps:
       - checkout
       - setup_remote_docker
@@ -18,8 +18,11 @@ jobs:
       - image: cimg/rust:1.56.0
 
 workflows:
-  lint-test:
+  lint-test-build:
     jobs:
-      - rust/lint-test-build:
-          release: true
+      - test:
+          filters:
+            branches:
+              only:
+                - main
 
