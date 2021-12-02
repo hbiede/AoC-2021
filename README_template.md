@@ -1,4 +1,6 @@
 # AoC-2021
+![CircleCI status](https://circleci.com/gh/hbiede/AoC-2020.svg?style=svg)
+
 [Advent of Code](https://adventofcode.com) Solutions for 2021 in Rust.
 
 ## Highlights:
