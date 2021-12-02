@@ -12,7 +12,7 @@ pub fn part1(input: String) -> i32 {
                 _ => panic!("Unknown direction"),
             }
         });
-    return depth * pos;
+    depth * pos
 }
 
 pub fn part2(input: String) -> i32 {
@@ -34,5 +34,5 @@ pub fn part2(input: String) -> i32 {
                 _ => panic!("Unknown direction"),
             }
         });
-    return depth * pos;
+    depth * pos
 }

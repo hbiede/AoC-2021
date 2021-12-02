@@ -23,8 +23,8 @@ fn get_day_num() -> u8 {
 fn get_day_fns() -> (PartFunction, PartFunction) {
     let day_num = get_day_num();
     match day_num {
-        1 => return (day01::part1, day01::part2),
-        2 => return (day02::part1, day02::part2),
+        1 => (day01::part1, day01::part2),
+        2 => (day02::part1, day02::part2),
 // CASE_MARKER
         _ => {
             panic!("Invalid day number: {}", day_num);
@@ -36,5 +36,5 @@ fn main() {
     let contents = fs::read_to_string(format!("src/day{:02}/input.txt", get_day_num())).expect("Failed to read puzzle input file");
     let (part1, part2) = get_day_fns();
     println!("Part 1: {}", part1(contents.clone()));
-    println!("Part 2: {}", part2(contents.clone()));
+    println!("Part 2: {}", part2(contents));
 }
