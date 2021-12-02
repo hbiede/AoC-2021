@@ -1,6 +1,22 @@
 version: '2.1'
-orbs:
-  rust: circleci/rust@1.6.0
+
+jobs:
+  build:
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: 'Lint'
+          run: 'cargo clippy'
+      - run:
+          name: 'Test'
+          run: 'cargo test'
+      - run:
+          name: 'Build'
+          run: 'cargo build --release -v --locked'
+    docker:
+      - image: cimg/rust:1.56.0
+
 workflows:
   lint-test:
     jobs:
