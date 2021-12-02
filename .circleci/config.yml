@@ -7,13 +7,13 @@ jobs:
       - setup_remote_docker
       - run:
           name: 'Lint'
-          run: 'cargo clippy'
+          command: 'cargo clippy'
       - run:
           name: 'Test'
-          run: 'cargo test'
+          command: 'cargo test'
       - run:
           name: 'Build'
-          run: 'cargo build --release -v --locked'
+          command: 'cargo build --release -v --locked'
     docker:
       - image: cimg/rust:1.56.0
 
