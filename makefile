@@ -29,6 +29,7 @@ solutionFiles:
 	@-sed -i '' -e "s/!DAY!/${LONG_DAY}/g" src/day${LONG_DAY}/**/*.*
 	@sed -i '' -e "s|\/\/ PATH_MARKER|#[path = \"day${LONG_DAY}\/solution.rs\"] mod day${LONG_DAY};\n\/\/ PATH_MARKER|g" src/main.rs
 	@sed -i '' -e "s|\/\/ CASE_MARKER|        ${DAY} => return (day${LONG_DAY}::part1, day${LONG_DAY}::part2),\n\/\/ CASE_MARKER|g" src/main.rs
+	@echo "#[path = \"day${LONG_DAY}/solution.rs\"] pub mod day${LONG_DAY};" >> src/lib.rs
 
 ## Downloads the instructions and inputs for a day
 download: src/day${LONG_DAY}/README.md src/day${LONG_DAY}/input.txt
