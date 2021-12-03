@@ -48,8 +48,6 @@ pub fn part1(input: String) -> i32 {
     let gamma = most_common_bit.iter().fold(0, |acc, bit| acc * 2 + bit);
     // Epsilon is the binary inversion of gamma
     let epsilon = !gamma & ((1 << most_common_bit.len()) - 1);
-    println!("Gamma: {}", gamma);
-    println!("Epsilon: {}", epsilon);
     gamma * epsilon
 }
 
