@@ -2,6 +2,7 @@ use std::{env, fs};
 
 #[path = "day01/solution.rs"] mod day01;
 #[path = "day02/solution.rs"] mod day02;
+#[path = "day03/solution.rs"] mod day03;
 // PATH_MARKER
 
 type PartFunction = fn(String) -> i32;
@@ -25,6 +26,7 @@ fn get_day_fns() -> (PartFunction, PartFunction) {
     match day_num {
         1 => (day01::part1, day01::part2),
         2 => (day02::part1, day02::part2),
+        3 => (day03::part1, day03::part2),
 // CASE_MARKER
         _ => {
             panic!("Invalid day number: {}", day_num);
@@ -35,6 +37,8 @@ fn get_day_fns() -> (PartFunction, PartFunction) {
 fn main() {
     let contents = fs::read_to_string(format!("src/day{:02}/input.txt", get_day_num())).expect("Failed to read puzzle input file");
     let (part1, part2) = get_day_fns();
-    println!("Part 1: {}", part1(contents.clone()));
-    println!("Part 2: {}", part2(contents));
+    let start_part1 = std::time::Instant::now();
+    println!("Part 1: {} ({} ms)", part1(contents.clone()), start_part1.elapsed().as_millis());
+    let start_part2 = std::time::Instant::now();
+    println!("Part 2: {} ({} ms)", part2(contents), start_part2.elapsed().as_millis());
 }
