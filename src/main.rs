@@ -3,6 +3,7 @@ use std::{env, fs};
 #[path = "day01/solution.rs"] mod day01;
 #[path = "day02/solution.rs"] mod day02;
 #[path = "day03/solution.rs"] mod day03;
+#[path = "day04/solution.rs"] mod day04;
 // PATH_MARKER
 
 type PartFunction = fn(String) -> i32;
@@ -27,6 +28,7 @@ fn get_day_fns() -> (PartFunction, PartFunction) {
         1 => (day01::part1, day01::part2),
         2 => (day02::part1, day02::part2),
         3 => (day03::part1, day03::part2),
+        4 => (day04::part1, day04::part2),
 // CASE_MARKER
         _ => {
             panic!("Invalid day number: {}", day_num);
