@@ -75,7 +75,15 @@ fn get_turns_and_scores(numbers: Vec<i32>, board: Board) -> (i32, i32) {
             .iter()
             .enumerate()
             .fold(0, |acc, (row_index, row)| {
-                acc + row.iter().enumerate().filter(|(_, square)| !(**square)).fold(0, |row_acc, (square_index, _)| row_acc + board[row_index][square_index])
+                acc + row
+                    .iter()
+                    .enumerate()
+                    .filter(|(_, square)| !(**square))
+                    .fold(
+                        0,
+                        |row_acc, (square_index, _)|
+                            row_acc + board[row_index][square_index]
+                    )
             })
         // Times the last played number
         * numbers[index - 1];
@@ -86,9 +94,12 @@ pub fn part1(input: String) -> i32 {
     let (numbers, boards) = parse_input(input);
     let mut solutions: Vec<(i32, i32)> = vec![];
     let min = numbers.len();
-    for i in 0..boards.len() {
+    for board in boards {
         // Limit to the minimum number of turns to win as a short circuit
-        let (turns, score) = get_turns_and_scores(numbers[0..min].to_vec(), boards[i].clone());
+        let (turns, score) = get_turns_and_scores(
+            numbers[0..min].to_vec(),
+            board.clone()
+        );
         solutions.push((turns, score));
     }
     // Find minimum turns in solutions and return the score
@@ -98,10 +109,13 @@ pub fn part1(input: String) -> i32 {
 pub fn part2(input: String) -> i32 {
     let (numbers, boards) = parse_input(input);
     let mut solutions: Vec<(i32, i32)> = vec![];
-    for i in 0..boards.len() {
-        let (turns, score) = get_turns_and_scores(numbers.clone(), boards[i].clone());
+    for board in boards {
+        let (turns, score) = get_turns_and_scores(
+            numbers.clone(),
+            board.clone()
+        );
         solutions.push((turns, score));
     }
-    // Find minimum turns in solutions and return the score
+    // Find maximum turns in solutions and return the score
     solutions.iter().max_by(|a, b| a.0.cmp(&b.0)).unwrap().1
 }

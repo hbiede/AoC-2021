@@ -27,10 +27,12 @@ fn find_lone_value(bits: Vec<&str>, invert: bool) -> i32 {
     let mut most_common = most_common_bit(bits.clone(), invert);
     let mut index: usize = 0;
     while remaining_bits.len() > 1 {
-        // Filter remaining bits so only the strings with the most common bit at the current index remain
+        // Filter remaining bits so only the strings with the most common bit at the
+        // current index remain
         remaining_bits = remaining_bits.iter()
             .filter(|bit| {
-                (**bit).to_string().chars().nth(index).unwrap() == format!("{}", most_common[index]).chars().next().unwrap()
+                (**bit).to_string().chars().nth(index).unwrap()
+                    == format!("{}", most_common[index]).chars().next().unwrap()
             })
             .copied()
             .collect::<Vec<&str>>();
@@ -38,7 +40,9 @@ fn find_lone_value(bits: Vec<&str>, invert: bool) -> i32 {
         most_common = most_common_bit(remaining_bits.clone(), invert);
         index += 1;
     }
-    remaining_bits[0].chars().fold(0, |acc, bit| acc * 2 + (bit as i32 - '0' as i32))
+    remaining_bits[0]
+        .chars()
+        .fold(0, |acc, bit| acc * 2 + (bit as i32 - '0' as i32))
 }
 
 pub fn part1(input: String) -> i32 {
