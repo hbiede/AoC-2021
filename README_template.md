@@ -26,6 +26,9 @@ STATS_TABLE
 
 Note: Times are from time of challenge release, not start time to completion time
 
+# Other Years' Solutions
+[List of Advent of Code Repos](https://github.com/hbiede/hbiede/blob/main/aoc.md)
+
 ## Scripting initially based on a script from [Ullaakut](https://github.com/Ullaakut/aoc19). Expanded upon and fixed by [HBiede](https://github.com/hbiede)
 #### Makefile Automation
 * Automatically downloads the challenge and input for the day (e.g.: `make download DAY=03`)
