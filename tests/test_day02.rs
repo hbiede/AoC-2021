@@ -1,4 +1,4 @@
-use aoc_2021::day02;
+use aoc_2021::day02 as day;
 
 #[test]
 fn test_part1() {
@@ -9,7 +9,7 @@ up 3
 down 8
 forward 2";
     let expected = 150;
-    let result = day02::part1(inputs.to_string());
+    let result = day::part1(inputs.to_string());
     assert_eq!(expected, result);
 }
 
@@ -22,6 +22,6 @@ up 3
 down 8
 forward 2";
     let expected = 900;
-    let result = day02::part2(inputs.to_string());
+    let result = day::part2(inputs.to_string());
     assert_eq!(expected, result);
 }
