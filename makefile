@@ -25,6 +25,7 @@ solutionFiles:
 	@echo "${H}=== Copying template for day ${SHORT_DAY} ===${X}"
 	@mkdir -p src/day${LONG_DAY}
 	@cp -r template/ src/day${LONG_DAY}/
+	@git add src/day${LONG_DAY}
 	@-sed -i '' -e "s/!DAY!/${LONG_DAY}/g" src/day${LONG_DAY}/*.*
 	@-sed -i '' -e "s/!DAY!/${LONG_DAY}/g" src/day${LONG_DAY}/**/*.*
 	@sed -i '' -e "s|\/\/ PATH_MARKER|#[path = \"day${LONG_DAY}\/solution.rs\"] mod day${LONG_DAY};\n\/\/ PATH_MARKER|g" src/main.rs
