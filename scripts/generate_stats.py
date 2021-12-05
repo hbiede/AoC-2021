@@ -70,6 +70,94 @@ def _get_second_count(data: Tuple[Dict[int, timedelta], Dict[int, timedelta]]) -
     return time_a, time_b
 
 
+def _get_stat_column(results: Dict[Tuple[Union[int, Any], int], Dict], column: str) \
+        -> (Dict[int, Any], Dict[int, Any]):
+    col_a = OrderedDict()
+    col_b = OrderedDict()
+    max_day_finished = 0
+    for entry in results:
+        if entry[1] > max_day_finished:
+            max_day_finished = entry[1]
+        if 'a' in results[entry].keys():
+            col_a[entry[1]] = results[entry]['a'][column]
+        if 'b' in results[entry].keys():
+            col_b[entry[1]] = results[entry]['b'][column]
+    max_day_finished += 1
+
+    for i in range(1, max_day_finished):
+        if not (i in col_a):
+            if column == "time":
+                col_a[i] = timedelta(seconds=-1)
+            else:
+                col_a[i] = -1
+        if not (i in col_b):
+            if column == "time":
+                col_b[i] = timedelta(seconds=-1)
+            else:
+                col_b[i] = -1
+    return col_a, col_b
+
+
+def _average(data: list) -> float:
+    sum_of_values = 0
+    count = 0
+    for value in data:
+        if value != -1:
+            sum_of_values += value
+            count += 1
+    return 0 if count == 0 else sum_of_values / count
+
+
+def _generate_standard_average(data: list) -> list:
+    return [_average(data[0:day]) for day in range(1, len(data) + 1)]
+
+
+def _generate_moving_average(data: list) -> list:
+    return [_average(data[day - 5 if day >= 5 else 0:day]) for day in range(1, len(data) + 1)]
+
+
+def _generate_graph(data: Dict, output_file="output.png", y_axis="", x_axis="Day", title=""):
+    days, output_data = zip(*sorted(data.items()))
+    plot.plot(days, output_data)
+    if len(days) > 6:
+        plot.plot(days, _generate_moving_average([v for v in data.values()]))
+        plot.plot(days, _generate_standard_average([v for v in data.values()]))
+        plot.legend([title, 'Moving Average', 'Average'])
+    else:
+        plot.plot(days, _generate_standard_average([v for v in data.values()]))
+        plot.legend([title, 'Average'])
+    plot.title(title)
+    plot.xlabel(x_axis)
+    plot.ylabel(y_axis)
+
+    open(output_file, "w").close()  # create the file if it doesn't exist
+    plot.savefig(output_file)
+    plot.close()
+
+
+def _parse_duration(s: str) -> timedelta:
+    """Parse a string like 01:11:16 (hours, minutes, seconds) into a timedelta"""
+    if s == ">24h":
+        return timedelta(hours=24)
+    h, m, s = [int(x) for x in s.split(":")]
+    return timedelta(hours=h, minutes=m, seconds=s)
+
+
+def _get_token() -> str:
+    if len(sys.argv) == 1:
+        print("Enter a session cookie")
+        sys.exit(1)
+    else:
+        token = ""
+        try:
+            with io.open(sys.argv[1], encoding="utf-8") as f:
+                token = f.read().strip()
+        except (IOError, OSError) as err:
+            if err.errno != errno.ENOENT:
+                raise
+        return token
+
+
 def generate_graphs(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> None:
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
@@ -144,104 +232,10 @@ def print_table(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> None
                      ("Avg", int(total_time[0] / 3600), (int(total_time[0]) / 60) % 60, total_time[0] % 60,
                       total_rank[0], total_score[0], int(total_time[1] / 3600), (int(total_time[1]) / 60) % 60,
                       total_time[1] % 60, total_rank[1], total_score[1])
-    output_string += NEW_LINE_REPLACER
-    print(output_string)
+    return output_string + NEW_LINE_REPLACER
 
 
-def _generate_graph(data: Dict, output_file="output.png", y_axis="", x_axis="Day", title=""):
-    days, output_data = zip(*sorted(data.items()))
-    plot.plot(days, output_data)
-    plot.plot(days, _generate_moving_average([v for v in data.values()]))
-    plot.plot(days, _generate_standard_average([v for v in data.values()]))
-    plot.legend([title, 'Moving Average', 'Average'])
-    plot.title(title)
-    plot.xlabel(x_axis)
-    plot.ylabel(y_axis)
-
-    open(output_file, "w").close()  # create the file if it doesn't exist
-    plot.savefig(output_file)
-    plot.close()
-
-
-def _generate_standard_average(data: list) -> list:
-    average_list = []
-    day = 0
-    for _ in data:
-        day += 1
-        average_list.append(_average(data[0:day]))
-    return average_list
-
-
-def _generate_moving_average(data: list) -> list:
-    moving_average_list = []
-    day = 0
-    for _ in data:
-        day += 1
-        moving_average_list.append(_average(data[day - 5 if day >= 5 else 0:day]))
-    return moving_average_list
-
-
-def _average(data: list) -> float:
-    sum_of_values = 0
-    count = 0
-    for value in data:
-        if value != -1:
-            sum_of_values += value
-            count += 1
-    return 0 if count == 0 else sum_of_values / count
-
-
-def _get_stat_column(results: Dict[Tuple[Union[int, Any], int], Dict], column: str) \
-        -> (Dict[int, Any], Dict[int, Any]):
-    col_a = OrderedDict()
-    col_b = OrderedDict()
-    max_day_finished = 0
-    for entry in results:
-        if entry[1] > max_day_finished:
-            max_day_finished = entry[1]
-        if 'a' in results[entry].keys():
-            col_a[entry[1]] = results[entry]['a'][column]
-        if 'b' in results[entry].keys():
-            col_b[entry[1]] = results[entry]['b'][column]
-    max_day_finished += 1
-
-    for i in range(1, max_day_finished):
-        if not (i in col_a):
-            if column == "time":
-                col_a[i] = timedelta(seconds=-1)
-            else:
-                col_a[i] = -1
-        if not (i in col_b):
-            if column == "time":
-                col_b[i] = timedelta(seconds=-1)
-            else:
-                col_b[i] = -1
-    return col_a, col_b
-
-
-def _parse_duration(s: str) -> timedelta:
-    """Parse a string like 01:11:16 (hours, minutes, seconds) into a timedelta"""
-    if s == ">24h":
-        return timedelta(hours=24)
-    h, m, s = [int(x) for x in s.split(":")]
-    return timedelta(hours=h, minutes=m, seconds=s)
-
-
-def _get_token() -> str:
-    if len(sys.argv) == 1:
-        print("Enter a session cookie")
-        sys.exit(1)
-    else:
-        token = ""
-        try:
-            with io.open(sys.argv[1], encoding="utf-8") as f:
-                token = f.read().strip()
-        except (IOError, OSError) as err:
-            if err.errno != errno.ENOENT:
-                raise
-        return token
-
-
-resultsDict = get_stats(cookie={"session": _get_token()}, years={int(sys.argv[2])})
-generate_graphs(resultsDict)
-print_table(resultsDict)
+if __name__ == '__main__':
+    resultsDict = get_stats(cookie={"session": _get_token()}, years={int(sys.argv[2])})
+    generate_graphs(resultsDict)
+    print(get_table(resultsDict))
