@@ -1,16 +1,16 @@
 use std::collections::HashMap;
-use regex::Regex;
 
 fn point_count(input: String, diagonals: bool) -> i32 {
     let mut points = HashMap::new();
     input
         .lines()
         .for_each(|line| {
-            let re = Regex::new(r"^(\d+),(\d+) -> (\d+),(\d+)$").unwrap();
-            let caps = re.captures(line).unwrap();
+            let point_strings = line.split(" -> ").collect::<Vec<&str>>();
+            let a = point_strings[0].split(',').collect::<Vec<&str>>();
+            let b = point_strings[1].split(',').collect::<Vec<&str>>();
             let ((ax, ay), (bx, by)) = (
-                (caps[1].parse::<i32>().unwrap(), caps[2].parse::<i32>().unwrap()),
-                (caps[3].parse::<i32>().unwrap(), caps[4].parse::<i32>().unwrap()),
+                (a[0].parse::<i32>().unwrap(), a[1].parse::<i32>().unwrap()),
+                (b[0].parse::<i32>().unwrap(), b[1].parse::<i32>().unwrap()),
             );
             if ax == bx {
                 // Vertical
