@@ -11,7 +11,7 @@
 
 #### Interesting approaches:
 
-* 
+* [Day 6]: Gotta love a good memoization problem
 
 #### Leaderboard appearances:
 
@@ -25,7 +25,8 @@
 |   3 | 00:17:07 ( 6083) (  0)     | 00:57:45 ( 6324) (  0)     |
 |   4 | 01:21:50 ( 7726) (  0)     | 01:24:40 ( 6294) (  0)     |
 |   5 | 00:15:50 ( 1712) (  0)     | 00:49:02 ( 4106) (  0)     |
-| Avg | 02:50:07 (18269) (  0)     | 03:06:38 (16399) (  0)     |
+|   6 | 00:07:42 ( 1898) (  0)     | 00:38:18 ( 4676) (  0)     |
+| Avg | 02:23:02 (15540) (  0)     | 02:41:54 (14445) (  0)     |
 
 
 <!--suppress CheckImageSize -->
@@ -33,6 +34,9 @@
 <img alt="Part 1 Time Stats" src="statsImages/part1time.png" width=400> <img alt="Part 2 Time Stats" src="statsImages/part2time.png" width=400>
 
 Note: Times are from time of challenge release, not start time to completion time
+
+# Other Years' Solutions
+[List of Advent of Code Repos](https://github.com/hbiede/hbiede/blob/main/aoc.md)
 
 ## Scripting initially based on a script from [Ullaakut](https://github.com/Ullaakut/aoc19). Expanded upon and fixed by [HBiede](https://github.com/hbiede)
 #### Makefile Automation

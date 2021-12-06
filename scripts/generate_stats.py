@@ -175,7 +175,7 @@ def generate_graphs(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> 
     _generate_graph(score_b, y_axis="Score", title="Part 2 Score", output_file=OUTPUT_DIR + "part2score.png")
 
 
-def print_table(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> None:
+def get_table(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> None:
     # Note: the ~~ is necessary to side-step the issue of eval not saving new lines in makefiles
     output_string = "| %3s | %26s | %26s |" % ("Day", "Part 1 Time (Rank) (Score)", "Part 2 Time (Rank) (Score)") \
                     + NEW_LINE_REPLACER

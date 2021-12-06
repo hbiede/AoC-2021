@@ -11,7 +11,7 @@
 
 #### Interesting approaches:
 
-* 
+* [Day 6]: Gotta love a good memoization problem
 
 #### Leaderboard appearances:
 
