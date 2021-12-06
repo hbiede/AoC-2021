@@ -1,11 +1,5 @@
 use std::{env, fs};
-
-#[path = "day01/solution.rs"] mod day01;
-#[path = "day02/solution.rs"] mod day02;
-#[path = "day03/solution.rs"] mod day03;
-#[path = "day04/solution.rs"] mod day04;
-#[path = "day05/solution.rs"] mod day05;
-// PATH_MARKER
+use aoc_2021::*;
 
 type PartFunction = fn(String) -> i32;
 
