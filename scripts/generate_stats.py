@@ -14,7 +14,7 @@ import io
 
 NEW_LINE_REPLACER = "~~"
 OUTPUT_DIR = "statsImages/"
-VERSION = 1.0
+VERSION = 1.1
 USER_AGENT = {"User-Agent": "advent-of-code-stats-gen v{}".format(VERSION)}
 
 
