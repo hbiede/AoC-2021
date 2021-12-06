@@ -1,4 +1,4 @@
-pub fn part1(input: String) -> i32 {
+pub fn part1(input: String) -> i64 {
     let mut depth = 0;
     let mut pos = 0;
     input
@@ -12,10 +12,10 @@ pub fn part1(input: String) -> i32 {
                 _ => panic!("Unknown direction"),
             }
         });
-    depth * pos
+    (depth * pos) as i64
 }
 
-pub fn part2(input: String) -> i32 {
+pub fn part2(input: String) -> i64 {
     let mut depth = 0;
     let mut pos = 0;
     let mut aim = 0;
@@ -34,5 +34,5 @@ pub fn part2(input: String) -> i32 {
                 _ => panic!("Unknown direction"),
             }
         });
-    depth * pos
+    (depth * pos) as i64
 }

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-fn point_count(input: String, diagonals: bool) -> i32 {
+fn point_count(input: String, diagonals: bool) -> i64 {
     let mut points = HashMap::new();
     input
         .lines()
@@ -31,13 +31,13 @@ fn point_count(input: String, diagonals: bool) -> i32 {
                 }
             }
         });
-    points.into_values().filter(|&x| x > 1).count() as i32
+    points.into_values().filter(|&x| x > 1).count() as i64
 }
 
-pub fn part1(input: String) -> i32 {
+pub fn part1(input: String) -> i64 {
     point_count(input, false)
 }
 
-pub fn part2(input: String) -> i32 {
+pub fn part2(input: String) -> i64 {
     point_count(input, true)
 }

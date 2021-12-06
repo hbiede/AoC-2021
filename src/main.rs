@@ -1,7 +1,7 @@
 use std::{env, fs};
 use aoc_2021::*;
 
-type PartFunction = fn(String) -> i32;
+type PartFunction = fn(String) -> i64;
 
 fn get_day_num() -> u8 {
     let args = env::args().collect::<Vec<String>>();

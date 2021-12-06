@@ -90,7 +90,7 @@ fn get_turns_and_scores(numbers: Vec<i32>, board: Board) -> (i32, i32) {
     (index as i32 - 1, score)
 }
 
-pub fn part1(input: String) -> i32 {
+pub fn part1(input: String) -> i64 {
     let (numbers, boards) = parse_input(input);
     let mut solutions: Vec<(i32, i32)> = vec![];
     let min = numbers.len();
@@ -103,10 +103,10 @@ pub fn part1(input: String) -> i32 {
         solutions.push((turns, score));
     }
     // Find minimum turns in solutions and return the score
-    solutions.iter().min_by(|a, b| a.0.cmp(&b.0)).unwrap().1
+    solutions.iter().min_by(|a, b| a.0.cmp(&b.0)).unwrap().1 as i64
 }
 
-pub fn part2(input: String) -> i32 {
+pub fn part2(input: String) -> i64 {
     let (numbers, boards) = parse_input(input);
     let mut solutions: Vec<(i32, i32)> = vec![];
     for board in boards {
@@ -117,5 +117,5 @@ pub fn part2(input: String) -> i32 {
         solutions.push((turns, score));
     }
     // Find maximum turns in solutions and return the score
-    solutions.iter().max_by(|a, b| a.0.cmp(&b.0)).unwrap().1
+    solutions.iter().max_by(|a, b| a.0.cmp(&b.0)).unwrap().1 as i64
 }

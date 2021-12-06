@@ -45,18 +45,18 @@ fn find_lone_value(bits: Vec<&str>, invert: bool) -> i32 {
         .fold(0, |acc, bit| acc * 2 + (bit as i32 - '0' as i32))
 }
 
-pub fn part1(input: String) -> i32 {
+pub fn part1(input: String) -> i64 {
     let lines = input.lines().collect::<Vec<&str>>();
     let most_common_bit = most_common_bit(lines.clone(), false);
     // Gamma is the decimal value of the most common bits
     let gamma = most_common_bit.iter().fold(0, |acc, bit| acc * 2 + bit);
     // Epsilon is the binary inversion of gamma
     let epsilon = !gamma & ((1 << most_common_bit.len()) - 1);
-    gamma * epsilon
+    (gamma * epsilon) as i64
 }
 
-pub fn part2(input: String) -> i32 {
+pub fn part2(input: String) -> i64 {
     let bits = input.lines().collect::<Vec<&str>>();
-    find_lone_value(bits.clone(), false)
-        * find_lone_value(bits.clone(), true)
+    (find_lone_value(bits.clone(), false)
+        * find_lone_value(bits.clone(), true)) as i64
 }
