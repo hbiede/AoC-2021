@@ -59,7 +59,7 @@ stats:
 setup:
 	@echo "${H}=== Creating Necessary Directories ===${X}"
 	@mkdir -p template
-	@pip3 -r scripts/requirements.txt
+	@pip3 install -r scripts/requirements.txt
 	@echo "${H}=== Create a template file and adjust the indicated recipe ===${X}"
 
 ## Call `make cookie SESSION=${}` to set the cookie used to download your input text
