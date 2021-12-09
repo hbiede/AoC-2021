@@ -7,7 +7,7 @@
 
 #### Favorite problems:
 
-* 
+* [Day 8]: The second star of this day was a bit tricky, but a unique problem I don't frequently face.
 
 #### Interesting approaches:
 

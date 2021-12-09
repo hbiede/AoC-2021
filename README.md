@@ -7,7 +7,7 @@
 
 #### Favorite problems:
 
-* 
+* [Day 8]: The second star of this day was a bit tricky, but a unique problem I don't frequently face.
 
 #### Interesting approaches:
 
@@ -28,7 +28,8 @@
 |   6 | 00:07:42 ( 1898) (  0)     | 00:38:18 ( 4676) (  0)     |
 |   7 | 00:10:58 ( 4963) (  0)     | 00:48:52 (10002) (  0)     |
 |   8 | 00:11:09 ( 2427) (  0)     | 01:10:57 ( 2861) (  0)     |
-| Avg | 01:50:03 (12579) (  0)     | 02:16:24 (12442) (  0)     |
+|   9 | 00:18:13 ( 4231) (  0)     | 00:30:30 ( 1923) (  0)     |
+| Avg | 01:39:50 (11651) (  0)     | 02:04:38 (11273) (  0)     |
 
 
 <!--suppress CheckImageSize -->
