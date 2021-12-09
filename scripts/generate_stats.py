@@ -177,9 +177,20 @@ def generate_graphs(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> 
 
 def get_table(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> None:
     # Note: the ~~ is necessary to side-step the issue of eval not saving new lines in makefiles
-    output_string = "| %3s | %26s | %26s |" % ("Day", "Part 1 Time (Rank) (Score)", "Part 2 Time (Rank) (Score)") \
+    scored = False
+    for entry in results:
+        if 'a' in results[entry].keys():
+            if results[entry]['a']['score'] != 0 or results[entry]['b']['score'] != 0:
+                scored = True
+                break
+    output_string = ("| %3s | %26s | %26s |" % ("Day", "Part 1 Time (Rank) (Score)", "Part 2 Time (Rank) (Score)") \
+                    if scored else \
+                    ("| %3s | %18s | %18s |" % ("Day", "Part 1 Time (Rank)", "Part 2 Time (Rank)"))) \
                     + NEW_LINE_REPLACER
-    output_string += "|%s:|%s|%s|" % ("-" * 4, "-" * 28, "-" * 28) + NEW_LINE_REPLACER
+    output_string += "| --: | %s | %s |" % (
+                        "-" * (26 if scored else 18),
+                        "-" * (26 if scored else 18)
+                      ) + NEW_LINE_REPLACER
     total_time = [0, 0]
     total_rank = [0, 0]
     total_score = [0, 0]
@@ -206,21 +217,28 @@ def get_table(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> None:
             total_rank[1] += results[entry]['b']['rank']
             score[1] = results[entry]['b']['score']
             total_score[1] += results[entry]['b']['score']
-            output_string += "|  %02s | %02d:%02d:%02d (%5d) (%3d)     | %02d:%02d:%02d (%5d) (%3d)     |" % \
-                             (day_string, int((time[0].seconds + 86440 * time[0].days) / 3600),
+            output_string += "|  %02s | %02d:%02d:%02d (%5d) %s  | %02d:%02d:%02d (%5d) %s  |" % \
+                             (day_string,
+                              int((time[0].seconds + 86440 * time[0].days) / 3600),
                               (int(time[0].seconds) / 60) % 60,
                               time[0].seconds % 60,
-                              rank[0], score[0], int((time[1].seconds + 86440 * time[1].days) / 3600),
+                              rank[0],
+                              ("(%3d)   " % score[0]) if scored else "",
+                              int((time[1].seconds + 86440 * time[1].days) / 3600),
                               (int(time[1].seconds) / 60) % 60,
-                              time[1].seconds % 60, rank[1], score[1]) + NEW_LINE_REPLACER
+                              time[1].seconds % 60,
+                              rank[1],
+                              ("(%3d)   " % score[1]) if scored else "") + NEW_LINE_REPLACER
         else:
-            output_string += ("|  %02s | %02d:%02d:%02d (%5d) (%3d)     | %-26s |" % (day_string,
+            output_string += ("|  %02s | %02d:%02d:%02d (%5d) %s  | %-26s |" % (day_string,
                                                                                       int((time[0].seconds + 86440 *
                                                                                            time[
                                                                                                0].days) / 3600),
                                                                                       (int(time[0].seconds) / 60) % 60,
                                                                                       time[0].seconds % 60,
-                                                                                      rank[0], score[0],
+                                                                                      rank[0],
+                                                                                      ("(%3d)   " % score[0]) \
+                                                                                        if scored else "",
                                                                                       "Unfinished")) + NEW_LINE_REPLACER
 
     # average the results
@@ -228,10 +246,18 @@ def get_table(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> None:
     total_rank[0], total_rank[1] = total_rank[0] / len(results), total_rank[1] / len(results)
     total_score[0], total_score[1] = total_score[0] / len(results), total_score[1] / len(results)
 
-    output_string += "| %3s | %02d:%02d:%02d (%5d) (%3d)     | %02d:%02d:%02d (%5d) (%3d)     |" % \
-                     ("Avg", int(total_time[0] / 3600), (int(total_time[0]) / 60) % 60, total_time[0] % 60,
-                      total_rank[0], total_score[0], int(total_time[1] / 3600), (int(total_time[1]) / 60) % 60,
-                      total_time[1] % 60, total_rank[1], total_score[1])
+    output_string += "| %3s | %02d:%02d:%02d (%5d) %s  | %02d:%02d:%02d (%5d) %s  |" % \
+                     ("Avg",
+                      int(total_time[0] / 3600),
+                      (int(total_time[0]) / 60) % 60,
+                      total_time[0] % 60,
+                      total_rank[0],
+                      ("(%3d)   " % total_score[0]) if scored else "",
+                      int(total_time[1] / 3600),
+                      (int(total_time[1]) / 60) % 60,
+                      total_time[1] % 60,
+                      total_rank[1],
+                      ("(%3d)   " % total_score[1]) if scored else "")
     return output_string + NEW_LINE_REPLACER
 
 
