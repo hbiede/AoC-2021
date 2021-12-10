@@ -32,7 +32,8 @@ fn find_syntax_error_score(line: &str) -> i32 {
     if stack.is_empty() {
         return 0;
     }
-    1
+    // Incomplete
+    -1
 }
 
 fn find_auto_complete_score(line: &str) -> i64 {
@@ -91,6 +92,12 @@ fn find_auto_complete_score(line: &str) -> i64 {
 }
 
 pub fn part1(input: String) -> i64 {
+    println!("{:?}", input
+        .lines()
+        .map(|line| {
+            find_syntax_error_score(line)
+        })
+        .filter(|&score| score >= 0).collect::<Vec<i32>>());
     input
         .lines()
         .map(|line| {
