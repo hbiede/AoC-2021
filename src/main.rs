@@ -30,6 +30,7 @@ fn get_day_fns() -> (PartFunction, PartFunction) {
         8 => (day08::part1, day08::part2),
         9 => (day09::part1, day09::part2),
         10 => (day10::part1, day10::part2),
+        11 => (day11::part1, day11::part2),
 // CASE_MARKER
         _ => {
             panic!("Invalid day number: {}", day_num);

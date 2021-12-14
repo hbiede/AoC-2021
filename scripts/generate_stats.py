@@ -65,8 +65,8 @@ def get_stats(cookie: dict, years=None) -> Dict[Tuple[Union[int, Any], int], Ord
 
 def _get_second_count(data: Tuple[Dict[int, timedelta], Dict[int, timedelta]]) -> \
         (Dict[int, int], Dict[int, int]):
-    time_a = {k: v.days * 1440 + v.seconds / 60 for k, v in data[0].items()}
-    time_b = {k: v.days * 1440 + v.seconds / 60 for k, v in data[1].items()}
+    time_a = {k: (0 if v == timedelta(hours=24) else v.days * 1440 + v.seconds / 60) for k, v in data[0].items()}
+    time_b = {k: (0 if v == timedelta(hours=24) else v.days * 1440 + v.seconds / 60) for k, v in data[1].items()}
     return time_a, time_b
 
 
@@ -175,6 +175,17 @@ def generate_graphs(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> 
     _generate_graph(score_b, y_axis="Score", title="Part 2 Score", output_file=OUTPUT_DIR + "part2score.png")
 
 
+def _get_day_string(time: timedelta, rank: int, score: int, scored=False) -> str:
+    if time == timedelta(hours=24):
+        return "✅"
+    return "%02d:%02d:%02d (%5d) %s" % (
+        time.seconds // 3600,
+        time.seconds // 60 % 60,
+        time.seconds % 60,
+        rank,
+        (" (%3d)   " % score) if scored else "",
+    )
+
 def get_table(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> None:
     # Note: the ~~ is necessary to side-step the issue of eval not saving new lines in makefiles
     scored = False
@@ -217,18 +228,11 @@ def get_table(results: Dict[Tuple[Union[int, Any], int], OrderedDict]) -> None:
             total_rank[1] += results[entry]['b']['rank']
             score[1] = results[entry]['b']['score']
             total_score[1] += results[entry]['b']['score']
-            output_string += "|  %02s | %02d:%02d:%02d (%5d) %s  | %02d:%02d:%02d (%5d) %s  |" % \
+            output_string += ("| %03s | %-26s | %-26s |" if scored else "| %03s | %-18s | %-18s |") % \
                              (day_string,
-                              int((time[0].seconds + 86440 * time[0].days) / 3600),
-                              (int(time[0].seconds) / 60) % 60,
-                              time[0].seconds % 60,
-                              rank[0],
-                              ("(%3d)   " % score[0]) if scored else "",
-                              int((time[1].seconds + 86440 * time[1].days) / 3600),
-                              (int(time[1].seconds) / 60) % 60,
-                              time[1].seconds % 60,
-                              rank[1],
-                              ("(%3d)   " % score[1]) if scored else "") + NEW_LINE_REPLACER
+                              _get_day_string(time[0], rank[0], score[0], scored=scored),
+                              _get_day_string(time[1], rank[0], score[0], scored=scored)
+                            ) + NEW_LINE_REPLACER
         else:
             output_string += ("|  %02s | %02d:%02d:%02d (%5d) %s  | %-26s |" % (day_string,
                                                                                       int((time[0].seconds + 86440 *
