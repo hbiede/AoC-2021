@@ -14,6 +14,11 @@ fn parse_insertions(input: String) -> HashMap<String, String> {
 }
 
 fn find_polymer_score(input: String, iterations: usize) -> i64 {
+    // Counts the number of symbols in the polymer
+    let mut char_counts = HashMap::new();
+    // Count the number of base pairs in the polymer
+    let mut pair_counts = HashMap::new();
+
     let mut parts = input.split("\n\n");
     let chain = parts
         .next()
@@ -22,21 +27,22 @@ fn find_polymer_score(input: String, iterations: usize) -> i64 {
         .chars()
         .collect::<Vec<char>>();
     let insertions = parse_insertions(parts.next().unwrap().to_string());
-    let mut char_counts = HashMap::new();
-    let mut pair_counts = HashMap::new();
     insertions
         .values()
         .for_each(|c| {
+            // Initialize the counts for the characters in the insertion
             char_counts.insert(c.to_string(), 0);
         });
     chain
         .iter()
         .for_each(|c| {
+            // Count the number of times each character appears in the chain
             char_counts.entry(c.to_string()).and_modify(|count| *count += 1);
         });
     chain
         .windows(2)
         .for_each(|c| {
+            // Fill with initial pairs
             pair_counts
                 .entry((c[0], c[1]))
                 .and_modify(|count| *count += 1)
@@ -44,12 +50,14 @@ fn find_polymer_score(input: String, iterations: usize) -> i64 {
         });
     for _ in 0..iterations {
         let mut new_pair_counts = pair_counts.clone();
-        for (&(a, b), _) in pair_counts.iter() {
+        for &(a, b) in pair_counts.keys() {
             let pair_count = *(pair_counts.get(&(a, b)).unwrap());
             if pair_count < 1 {
+                // This pair is not present in the chain currently, skip it
                 continue;
             }
 
+            // Get the polymer symbol to insert
             let insert = insertions
                 .get(&*format!("{}{}", a, b))
                 .unwrap()
@@ -59,7 +67,8 @@ fn find_polymer_score(input: String, iterations: usize) -> i64 {
             // Add new insert to overall char count
             char_counts
                 .entry(insert.to_string())
-                .and_modify(|count| *count += pair_count);
+                .and_modify(|count| *count += pair_count)
+                .or_insert(pair_count);
             // Remove initial pair from pair count
             new_pair_counts
                 .entry((a, b))
@@ -80,6 +89,7 @@ fn find_polymer_score(input: String, iterations: usize) -> i64 {
     char_counts.values().max().unwrap() - (
         *(char_counts
             .values()
+            // Don't count zeroes
             .filter(|v| ((**v) as i64).is_positive())
             .min()
             .unwrap())
