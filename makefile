@@ -26,8 +26,8 @@ solutionFiles:
 	@mkdir -p src/day${LONG_DAY}
 	@cp -r template/ src/day${LONG_DAY}/
 	@git add src/day${LONG_DAY}
-	@-sed -i '' -e "s/!DAY!/${LONG_DAY}/g" src/day${LONG_DAY}/*.*
-	@-sed -i '' -e "s/!DAY!/${LONG_DAY}/g" src/day${LONG_DAY}/**/*.*
+	@-sed -i '' -e "s/!DAY!/${LONG_DAY}/g" src/day${LONG_DAY}/*.* 2> /dev/null || true
+	@-sed -i '' -e "s/!DAY!/${LONG_DAY}/g" src/day${LONG_DAY}/**/*.* 2> /dev/null || true
 	@sed -i '' -e "s|\/\/ CASE_MARKER|        ${DAY} => (day${LONG_DAY}::part1, day${LONG_DAY}::part2),\n\/\/ CASE_MARKER|g" src/main.rs
 	@echo "#[path = \"day${LONG_DAY}/solution.rs\"] pub mod day${LONG_DAY};" >> src/lib.rs
 
