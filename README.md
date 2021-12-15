@@ -7,7 +7,8 @@
 
 #### Favorite problems:
 
-* [Day 8]: The second star of this day was a bit tricky, but a unique problem I don't frequently face.
+* [Day 8]: The second star of this day (7-segment decoding) was a bit tricky, but a unique problem I don't frequently face.
+* [Day 12]: The modified DFS was pretty fun to think through.
 
 #### Interesting approaches:
 
@@ -31,7 +32,8 @@
 |   9 | 00:18:13 ( 4231)   | 00:30:30 ( 4231)   |
 |  10 | 00:09:42 ( 1455)   | 00:22:29 ( 1455)   |
 |  11 | ✅                  | ✅                  |
-| Avg | 03:33:29 (13821)   | 03:54:56 (13564)   |
+|  12 | ✅                  | ✅                  |
+| Avg | 05:15:41 (15941)   | 05:35:21 (15574)   |
 
 
 <!--suppress CheckImageSize -->

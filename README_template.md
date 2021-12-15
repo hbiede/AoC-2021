@@ -7,7 +7,8 @@
 
 #### Favorite problems:
 
-* [Day 8]: The second star of this day was a bit tricky, but a unique problem I don't frequently face.
+* [Day 8]: The second star of this day (7-segment decoding) was a bit tricky, but a unique problem I don't frequently face.
+* [Day 12]: The modified DFS was pretty fun to think through.
 
 #### Interesting approaches:
 

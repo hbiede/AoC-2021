@@ -65,8 +65,8 @@ def get_stats(cookie: dict, years=None) -> Dict[Tuple[Union[int, Any], int], Ord
 
 def _get_second_count(data: Tuple[Dict[int, timedelta], Dict[int, timedelta]]) -> \
         (Dict[int, int], Dict[int, int]):
-    time_a = {k: (0 if v == timedelta(hours=24) else v.days * 1440 + v.seconds / 60) for k, v in data[0].items()}
-    time_b = {k: (0 if v == timedelta(hours=24) else v.days * 1440 + v.seconds / 60) for k, v in data[1].items()}
+    time_a = {k: (None if v >= timedelta(hours=24) else v.days * 1440 + v.seconds / 60) for k, v in data[0].items()}
+    time_b = {k: (None if v >= timedelta(hours=24) else v.days * 1440 + v.seconds / 60) for k, v in data[1].items()}
     return time_a, time_b
 
 
@@ -102,7 +102,7 @@ def _average(data: list) -> float:
     sum_of_values = 0
     count = 0
     for value in data:
-        if value != -1:
+        if value != -1 and value is not None:
             sum_of_values += value
             count += 1
     return 0 if count == 0 else sum_of_values / count
@@ -113,7 +113,7 @@ def _generate_standard_average(data: list) -> list:
 
 
 def _generate_moving_average(data: list) -> list:
-    return [_average(data[day - 5 if day >= 5 else 0:day]) for day in range(1, len(data) + 1)]
+    return [_average(data[max(0, day - 5):day]) for day in range(1, len(data) + 1)]
 
 
 def _generate_graph(data: Dict, output_file="output.png", y_axis="", x_axis="Day", title=""):
