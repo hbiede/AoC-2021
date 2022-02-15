@@ -21,6 +21,9 @@
 ## Stats
 STATS_TABLE
 
+Note: After spending a lot of time on day 16 and not finishing part 1, I took
+[an open source solution](https://github.com/mikefarquhar/advent_of_code_2021/blob/main/16/src/main.rs) and modified it.
+
 <!--suppress CheckImageSize -->
 <img alt="Part 1 Rank" src="statsImages/part1rank.png" width=400> <img alt="Part 2 Rank" src="statsImages/part2rank.png" width=400>
 <img alt="Part 1 Time Stats" src="statsImages/part1time.png" width=400> <img alt="Part 2 Time Stats" src="statsImages/part2time.png" width=400>

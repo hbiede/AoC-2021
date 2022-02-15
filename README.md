@@ -36,8 +36,13 @@
 |  13 | ✅                  | ✅                  |
 |  14 | ✅                  | ✅                  |
 |  15 | ✅                  | ✅                  |
-| Avg | 09:00:33 (20704)   | 09:16:17 (19766)   |
+|  16 | ✅                  | ✅                  |
+|  17 | ✅                  | ✅                  |
+| Avg | 10:46:22 (22182)   | 11:00:15 (21178)   |
 
+
+Note: After spending a lot of time on day 16 and not finishing part 1, I took
+[an open source solution](https://github.com/mikefarquhar/advent_of_code_2021/blob/main/16/src/main.rs) and modified it.
 
 <!--suppress CheckImageSize -->
 <img alt="Part 1 Rank" src="statsImages/part1rank.png" width=400> <img alt="Part 2 Rank" src="statsImages/part2rank.png" width=400>

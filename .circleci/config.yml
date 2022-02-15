@@ -6,14 +6,14 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: 'Build'
+          command: 'CARGO_NET_GIT_FETCH_WITH_CLI=true cargo build --release -v --locked'
+      - run:
           name: 'Lint'
           command: 'cargo clippy'
       - run:
           name: 'Test'
           command: 'cargo test'
-      - run:
-          name: 'Build'
-          command: 'cargo build --release -v --locked'
     docker:
       - image: cimg/rust:1.56.0
 
